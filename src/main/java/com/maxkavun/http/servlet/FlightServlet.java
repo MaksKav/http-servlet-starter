@@ -19,7 +19,6 @@ public class FlightServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
-
         try (var printWriter = resp.getWriter()) {
             printWriter.write("<h1>Список перелетов</h1>");
             printWriter.write("<ul>");
