@@ -18,7 +18,6 @@ public final  class ConnectionManager {
         try {
             return DriverManager.getConnection(PropertiesUtil.get(URL_KEY) , PropertiesUtil.get(USER_KEY), PropertiesUtil.get(PASSWORD_KEY));
         } catch (SQLException e) {
-            System.out.println("SUKA");
             throw new RuntimeException(e);
         }
     }

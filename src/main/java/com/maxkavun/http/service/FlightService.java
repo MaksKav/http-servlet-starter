@@ -27,6 +27,8 @@ public class FlightService {
                 .collect(toList());
     }
 
+
+
     public static FlightService getInstance() {
         return INSTANCE;
     }

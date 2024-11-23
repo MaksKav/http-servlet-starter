@@ -39,10 +39,11 @@ public class FlightDao implements Dao<Long, Flight> {
             }
 
             return flights;
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Connection failed");
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
