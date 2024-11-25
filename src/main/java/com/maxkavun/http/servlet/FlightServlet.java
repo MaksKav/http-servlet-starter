@@ -1,7 +1,6 @@
 package com.maxkavun.http.servlet;
 
 import com.maxkavun.http.service.FlightService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ public class FlightServlet extends HttpServlet {
     private final FlightService flightService = FlightService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         resp.setContentType("text/html");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try (var printWriter = resp.getWriter()) {
@@ -30,6 +29,9 @@ public class FlightServlet extends HttpServlet {
                         """.formatted(flightDto.getId() , flightDto.getDescription()));
             });
             printWriter.write("</ul>");
+        } catch (IOException ioException){
+            System.out.println("Exception in doGet method");
+            ioException.printStackTrace();
         }
     }
 }

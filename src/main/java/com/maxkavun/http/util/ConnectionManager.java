@@ -16,9 +16,16 @@ public final  class ConnectionManager {
 
     public static Connection get() {
         try {
-            return DriverManager.getConnection(PropertiesUtil.get(URL_KEY) , PropertiesUtil.get(USER_KEY), PropertiesUtil.get(PASSWORD_KEY));
+            System.out.println("Trying to connect to the database...");
+            return DriverManager.getConnection(
+                    PropertiesUtil.get(URL_KEY),
+                    PropertiesUtil.get(USER_KEY),
+                    PropertiesUtil.get(PASSWORD_KEY)
+            );
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("Failed to connect to the database: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to connect to the database");
         }
     }
 }

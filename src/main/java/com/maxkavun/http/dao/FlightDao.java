@@ -28,6 +28,7 @@ public class FlightDao implements Dao<Long, Flight> {
 
     @Override
     public List<Flight> findAll() {
+        System.out.println("LOG from findAll method before try ");
         try (var connection = ConnectionManager.get();
              var preparedStatement = connection.prepareStatement(FIND_ALL)) {
             System.out.println("Connection established");
@@ -40,7 +41,6 @@ public class FlightDao implements Dao<Long, Flight> {
 
             return flights;
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Connection failed");
             throw new RuntimeException(e);
         }
@@ -75,12 +75,18 @@ public class FlightDao implements Dao<Long, Flight> {
         return new Flight(
                 resultSet.getObject("id", Long.class),
                 resultSet.getObject("flight_no", String.class),
-                resultSet.getObject("departure_date", Timestamp.class).toLocalDateTime(),
+                resultSet.getObject("departure_date", Timestamp.class) != null
+                        ? resultSet.getObject("departure_date", Timestamp.class).toLocalDateTime()
+                        : null,
                 resultSet.getObject("departure_airport_code", String.class),
-                resultSet.getObject("arrival_date", Timestamp.class).toLocalDateTime(),
+                resultSet.getObject("arrival_date", Timestamp.class) != null
+                        ? resultSet.getObject("arrival_date", Timestamp.class).toLocalDateTime()
+                        : null,
                 resultSet.getObject("arrival_airport_code", String.class),
                 resultSet.getObject("aircraft_id", Integer.class),
-                FlightStatus.valueOf(resultSet.getObject("status", String.class))
+                resultSet.getObject("status", String.class) != null
+                        ? FlightStatus.valueOf(resultSet.getObject("status", String.class))
+                        : null
         );
     }
 
